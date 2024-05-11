@@ -32,7 +32,7 @@ type Credentials struct {
 // 创建将被编码为JWT对象的结构体
 // jwt.StandardClaims结构体中会包含一些默认字段，如过期时间，下面会将值存入
 // claims 结构体相当于 payload 载荷内容
-type claims struct {
+type Claims struct {
 	Username string `json:"username"`
 	jwt.StandardClaims
 }
@@ -57,7 +57,7 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 	// 声明令牌的到期时间
 	expirationTime := time.Now().Add(5 * time.Minute)
 	// 实例化JWT声明，其中包括用户名和有效时间，存入具体值
-	claims := &claims{
+	claims := &Claims{
 		Username: creds.Username,
 		StandardClaims: jwt.StandardClaims{
 			// 设置过期时间，按照jwt的StandardClaims结构体字段来设置
