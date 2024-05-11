@@ -2,6 +2,7 @@ package auth
 
 import (
 	"github.com/dgrijalva/jwt-go"
+	"log"
 	"net/http"
 	"time"
 )
@@ -48,6 +49,7 @@ func Refresh(w http.ResponseWriter, r *http.Request) {
 	// 否则，返回错误的请求状态。
 	if time.Unix(claims.ExpiresAt, 0).Sub(time.Now()) > 30*time.Second {
 		w.WriteHeader(http.StatusBadRequest)
+		log.Println("token过期时间大于30s")
 		return
 	}
 
